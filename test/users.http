@@ -1,0 +1,4 @@
+@URL=http://localhost:3000/users
+
+### obter todos 
+GET {(URL)}
