@@ -4,6 +4,7 @@ const path = require("path");
 var logger = require("morgan");
 const mongoose = require("mongoose");
 require("dotenv").config(); //Variaveis de ambiente
+const cors = require("cors");
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -23,6 +24,9 @@ var feedbackRouter = require("./routes/feedback");
 var livrosRouter = require("./routes/livro");
 
 var app = express();
+
+// Configurando o middleware cors
+app.use(cors());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

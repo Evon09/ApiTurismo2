@@ -7,7 +7,7 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    new mongoose.Types.ObjectId(id);
+    // new mongoose.Types.ObjectId(id);
   } catch (err) {
     return res.status(400).json({ message: "Formato de ID incorreto!" });
   }
@@ -84,6 +84,47 @@ router.delete("/:id", async (req, res) => {
     // Lidar com outros erros inesperados aqui, como erros de banco de dados.
     res.status(500).json({ message: "Ocorreu um erro ao deletar a avaliação" });
   }
+});
+
+/**
+ * ja comentou
+ */
+router.get("/check/:userId/:tourId", async (req, res) => {
+  const { userId, tourId } = req.params;
+
+  try {
+    // new mongoose.Types.ObjectId(userId);
+    // new mongoose.Types.ObjectId(tourId);
+  } catch (err) {
+    return res.status(400).json({ message: "Formato de ID incorreto!" });
+  }
+
+  const existingFeedback = await Feedback.findOne({ userId, tourId });
+
+  return existingFeedback
+    ? res.json({ hasFeedback: true, feedback: existingFeedback })
+    : res.json({ hasFeedback: false });
+});
+
+/**
+ * feedbacks de um tour
+ */
+router.get("/tour/:tourId", async (req, res) => {
+  const { tourId } = req.params;
+
+  try {
+    // new mongoose.Types.ObjectId(tourId);
+  } catch (err) {
+    return res.status(400).json({ message: "Formato de ID incorreto!" });
+  }
+
+  const feedbacks = await Feedback.find({ tourId });
+
+  return feedbacks.length > 0
+    ? res.json(feedbacks)
+    : res
+        .status(404)
+        .json({ message: "Nenhum feedback encontrado para este passeio." });
 });
 
 //TODO: Atualizar uma avaliação na collection
